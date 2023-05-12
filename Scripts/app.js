@@ -12,10 +12,13 @@ const height = 12
 const cellCount = width * height
 let cells = []
 
-const startingPosition = 172
-const currentPosition = startingPosition
+const heroStartingPosition = 172
+let heroCurrentPosition = heroStartingPosition
 
 // ? Alien configuration - an array for the alive aliens at the start of the game - nested arrays/sep
+
+const alienPositions = [17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41]
+
 // ? Shields - need arrays for the locations of the 4 shields
 // ? Buttons - play, restart and mute
 // ? Music and sounds for missiles and hits and win
@@ -23,7 +26,8 @@ const currentPosition = startingPosition
 
 // ! ---- event listeners ----*/
 // will need an event listener for handling a player directional
-//move - so left (-= 1) or right (+= 1) along the x axis 
+//move - so left (-= 1) or right (+= 1) along the x axis
+document.addEventListener('keydown', handleHeroMovememnt)
 
 // will also need an event listener for the space bar - to fire a missile
 
@@ -49,7 +53,8 @@ function createGrid() {
         grid.appendChild(cell)
         cells.push(cell)
     }
-    addHero(startingPosition)
+    addHero(heroStartingPosition)
+    // addAliens[alienPositions]
 }
 
 createGrid()
@@ -60,14 +65,49 @@ createGrid()
 // can than be updated to their new cell
 
 function addHero(position) {
-    console.log('Hero being added to the following cell ->', position)
+    console.log('Hero added to the following cell ->', position)
     cells[position].classList.add('hero')
+}
+
+function removeHero() {
+    console.log('Hero removed')
+    cells[heroCurrentPosition].classList.remove('hero')
+}
+
+function handleHeroMovememnt(event){
+    const key = event.keyCode
+
+    const left = 37
+    const right = 39
+
+    removeHero()
+
+    if (key === left && heroCurrentPosition > cellCount - width) {
+        console.log('LEFT')
+        heroCurrentPosition--
+    } else if (key === right && heroCurrentPosition < cellCount - 1) {
+        console.log('RIGHT')
+        heroCurrentPosition++
+    } else {
+        console.log('INVALID KEY')
+    }
+
+    addHero(heroCurrentPosition)
 }
 
 // ? Alien classes
 // add the alien classes which relates to their respective images
 // Remove the class from their previous positions so that their current position 
 // can than be updated to their new cell
+
+// function addAliens(position) {
+//     alienPositions.forEach((element) => {
+//         console.log('Enemies being added to the following cells ->', position)
+//         cells[position].classList.add('alien')
+//     });
+// }
+
+
 
 // ? Alien Movement
 // Need to have the aliens (array) start off by moving from left to right. (+= 1)

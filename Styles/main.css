@@ -25,7 +25,8 @@ header {
 
 main {
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-start;
+    gap: 10vh;
     /* align-items: center; */
     border: 3px solid lime;
 }
@@ -34,8 +35,8 @@ main {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 75vh;
-    width: 75vh;
+    height: 80vh;
+    width: 90vh;
     background-color: black;
     border: 3px solid blue;
 }
@@ -46,8 +47,8 @@ main {
     align-items: center;
     flex-wrap: wrap;
     /* box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2); */
-    height: 75vh;
-    width: 75vh;
+    height: 80vh;
+    width: 90vh;
   }
 
 .grid > div {
@@ -59,6 +60,11 @@ main {
     background-size: cover;
 }
 
+.grid > div.alien {
+    background: url("../Assets/Frieza.png") no-repeat center;
+    background-size: cover;
+}
+
 .instructions {
     display: flex;
     flex-direction: column;
@@ -66,7 +72,9 @@ main {
     align-items: center;
     background-color: black;
     color: white;
-    width: 24vh;
+    font-size: 0.9vw;
+    width: 30vh;
+    height: 80vh;
     border: 3px solid red;
 }
 
@@ -80,7 +88,7 @@ main {
 button {
     font-family: 'Roboto Mono', monospace;
     background-color: black;
-    color: orange;    
+    color: orange;
 }
 
 /* Will style the loading page 
