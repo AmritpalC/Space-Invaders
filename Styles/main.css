@@ -1,0 +1,97 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    height: 100vh;
+    margin: 2%;
+    font-family: 'Roboto Mono', monospace;
+    background: url("https://www.icegif.com/wp-content/uploads/2021/10/icegif-1647.gif") center no-repeat;
+    background-size: cover;
+    color: aqua;
+}
+
+header {
+    display: flex;
+    justify-content: space-around;
+    border: 2px solid orange;
+}
+
+#title {
+    background-color: black;
+    padding: 0 1vmin;
+    border: 2px solid aqua;
+}
+
+main {
+    display: flex;
+    justify-content: space-between;
+    /* align-items: center; */
+    border: 3px solid lime;
+}
+
+.grid-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 75vh;
+    width: 75vh;
+    background-color: black;
+    border: 3px solid blue;
+}
+
+.grid {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    /* box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2); */
+    height: 75vh;
+    width: 75vh;
+  }
+
+.grid > div {
+    border: 1px solid lightgoldenrodyellow;
+}
+
+.grid > div.hero {
+    background: url("../Assets/UI Goku pixel.png") no-repeat center;
+    background-size: cover;
+}
+
+.instructions {
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    align-items: center;
+    background-color: black;
+    color: white;
+    width: 24vh;
+    border: 3px solid red;
+}
+
+.HUD {
+    display: flex;
+    justify-content: space-around;
+    background-color: slateblue;
+    border: 2px solid magenta;
+}
+
+button {
+    font-family: 'Roboto Mono', monospace;
+    background-color: black;
+    color: orange;    
+}
+
+/* Will style the loading page 
+
+/* Will create a grid class with cells with their own class within this
+
+// Will set up as a flex box and use viewport units so that the design 
+is responsive
+
+// Will apply the images of the aliens and player characters by styling the
+divs of the respective cell(s) which is the current location of the user 
+(and locations of the aliens) 
+
+
