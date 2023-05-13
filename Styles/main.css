@@ -65,6 +65,11 @@ main {
     background-size: cover;
 }
 
+.grid > div.shield {
+    background: url("../Assets/Aura-shield.png") no-repeat center;
+    background-size: cover;
+}
+
 .instructions {
     display: flex;
     flex-direction: column;
