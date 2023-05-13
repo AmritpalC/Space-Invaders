@@ -36,6 +36,8 @@ const allShields = [
 // will need an event listener for handling a player directional
 //move - so left (-= 1) or right (+= 1) along the x axis
 document.addEventListener('keydown', handleHeroMovememnt)
+document.addEventListener('keydown', shootHeroMissile)
+
 
 // will also need an event listener for the space bar - to fire a missile
 
@@ -70,12 +72,19 @@ function startGame() {
     addShields(allShields)
     let alienDirection = 'right'
     // startAlienMovement()
+    gameOver()
 }
 
 // ? Hero movement - hero classes
 // add the hero class by adding the class which relates to their image
 // Remove the hero from their previous position so that their current position 
 // can than be updated to their new cell
+
+// ? Player class - to handle movement & shooting of missiles
+// For the player, will be best to have a method using keycodes for left and right
+// Will need guards in place for the left and right movement so that the player 
+// stays on the board when moving (updating current position)
+// Imagine we can have another method for the player firing their missiles
 
 function addHero(position) {
     console.log('Hero added to the following cell ->', position)
@@ -139,8 +148,6 @@ function addShields() {
 }
 
 
-
-
 // ? Alien Movement
 // Need to have the aliens (array) start off by moving from left to right. (+= 1)
 // Then when the furthest right alien value hits the 'wall' to the right, increase 
@@ -173,66 +180,105 @@ function moveAliens() {
         (alien % width === 0 && alienDirection === "left") || 
         ((alien + 1) % width === 0 && alienDirection === "right"))
 
-  if (aliensReachedWall) {
-    removeAliens()
-    alienPositions = alienPositions.map(alien => alien + width)
-    alienDirection = alienDirection === "left" ? "right" : "left"
-    addAliens()
-    return
-  }
+    if (aliensReachedWall) {
+        removeAliens()
+        alienPositions = alienPositions.map(alien => alien + width)
+        alienDirection = alienDirection === "left" ? "right" : "left"
+        addAliens()
+        return
+    }
 
-  removeAliens()
-  alienPositions = alienPositions.map(alien => alien + (alienDirection === "left" ? -1 : 1))
-  addAliens()
+    removeAliens()
+    alienPositions = alienPositions.map(alien => alien + (alienDirection === "left" ? -1 : 1))
+    addAliens()
 }
  
 
 
 
-    // ? Player class - to handle movement & shooting of missiles
-    // For the player, will be best to have a method using keycodes for left and right
-    // Will need guards in place for the left and right movement so that the player 
-    // stays on the board when moving (updating current position)
-    // Imagine we can have another method for the player firing their missiles
+// ? Handle shoot - will need separate functions for player and aliens
+// ? Player Shoot
+// only allow missile fire (space press) to be valid if there is not a cell with 
+// class of missile already. Update position of missile up the y axis of the column 
+// of where the missile exists. Class will update as this happens, until the missile 
+// goes 'off screen'
+
+// ! blur - on the el . Remember to blur the space button press (evt.target)
+
+
+function shootHeroMissile(event) {
+    if (event.keyCode === 32) {
+        const heroMissile = document.createElement('div')
+        let heroMissilePosition = heroCurrentPosition - width
+        cells[heroMissilePosition].classList.add('heroMissile')
+        // const heroMissileCell = document.querySelector(`[data-cell='${heroMissilePosition}']`)
+        // heroMissileCell.appendChild(heroMissile)
+        console.log('Kamehameha!')
+    }
+}
+
+    // const key = event.keyCode
     
-    // ? Handle shoot - will need separate functions for player and aliens
-    // ? Player Shoot
-    // only allow missile fire (space press) to be valid if there is not a cell with 
-    // class of missile already. Update position of missile up the y axis of the column 
-    // of where the missile exists. Class will update as this happens, until the missile 
-    // goes 'off screen'
+    // const space = 32
+    // const right = 39
     
-    // ! blur - on the el . Remember to blur the space button press (evt.target)
+    // removeHero()
     
-    // ? Alien shoot
-    // Will need a bottom row alien to be randomly selected to fire a missile at the user. 
-    // Limit how frequently this occurs, use an interval?
-    // Select the lowest row aliens and create a new array and randomly select
-    // an alien from the list? Might be a cleaner way.
-    // Update class of cell of the missile as it moves down the column, until the
-    // missile goes off screen
+    // if (key === left && heroCurrentPosition > cellCount - width) {
+    //     console.log('LEFT')
+    //     heroCurrentPosition--
+    // } else if (key === right && heroCurrentPosition < cellCount - 1) {
+    //     console.log('RIGHT')
+    //     heroCurrentPosition++
+    // } else {
+    //     console.log('INVALID KEY')
+    // }
     
-    // ? Check if an alien has been hit
-    // Where the classes of players missile and alien position are the same, that 
-    // would be a hit. 
-    // Or, need to look into collision detection but based on brief research so 
-    // far, use the rectangle hit boxes and if they overlap it's a hit?
-    // Update score as each alien is hit
-    
-    // ? Check if player has been hit
-    // Similar to above, use collision or where the class of alien missile and
-    // player position have the same index, lose a life
-    
-    // ! ---- winning functions ----*/
-    // ? Player Wins
-    // When there are no aliens left - so no aliens in the aliens array?
-    
-    // ? Player loses 
-    // No lives lift --> so lives equal to 0
-    // Aliens reach 'earth' so reach the same row as the player
-    
-    // ! ---- Page load (initialise game) ----*/
-    createGrid()
-    startGame()
-    // start game function - render the elements to the DOM
-    // function to toggle screen from start screen to game play?
+    // addHero(heroCurrentPosition)
+// }
+
+// ? Alien shoot
+// Will need a bottom row alien to be randomly selected to fire a missile at the user. 
+// Limit how frequently this occurs, use an interval?
+// Select the lowest row aliens and create a new array and randomly select
+// an alien from the list? Might be a cleaner way.
+// Update class of cell of the missile as it moves down the column, until the
+// missile goes off screen
+
+// ? Check if an alien has been hit
+// Where the classes of players missile and alien position are the same, that 
+// would be a hit. 
+// Or, need to look into collision detection but based on brief research so 
+// far, use the rectangle hit boxes and if they overlap it's a hit?
+// Update score as each alien is hit
+
+// ? Check if player has been hit
+// Similar to above, use collision or where the class of alien missile and
+// player position have the same index, lose a life
+
+// ! ---- winning functions ----*/
+// ? Player Wins
+// When there are no aliens left - so no aliens in the aliens array?
+
+// ? Player loses 
+// No lives lift --> so lives equal to 0
+// Aliens reach 'earth' so reach the same row as the player
+
+function gameOver() {
+    let aliensReachedEarth = (alienPositions.some((alien) => (alien >= cellCount - width)))
+    // or try if alien === cellCount - 1  --> i.e when the aliens reach cell 179 (bottom right)
+    if (aliensReachedEarth) {
+        stopAlienMovement()
+        console.log('Game over! The aliens have invaded Earth!')
+    } else {
+        return
+    }
+}
+
+
+
+// ! ---- Page load (initialise game) ----*/
+createGrid()
+startGame()
+// start game function - render the elements to the DOM
+// function to toggle screen from start screen to game play?
