@@ -158,11 +158,6 @@ function addShields() {
 // of 0 when divided by (width - 1) - should move them down, else move right
 // Use an interval timer to start alien movement
 
-
-// function aliensMovement() {
-    //     moveAliensRight()
-    //     moveAliensLeft()
-    // }
     
 let alienMoveInterval 
 let alienDirection = 'right'
@@ -208,34 +203,30 @@ function moveAliens() {
 
 function shootHeroMissile(event) {
     if (event.keyCode === 32) {
+        event.preventDefault()
         const heroMissile = document.createElement('div')
         let heroMissilePosition = heroCurrentPosition - width
         cells[heroMissilePosition].classList.add('heroMissile')
         // const heroMissileCell = document.querySelector(`[data-cell='${heroMissilePosition}']`)
         // heroMissileCell.appendChild(heroMissile)
         console.log('Kamehameha!')
+
+        // getting missile to move up the column (-width) on an interval once it's fired
+
+        const heroMissileInterval = setInterval(() => {
+            cells[heroMissilePosition].classList.remove('heroMissile')
+            heroMissilePosition -= width
+
+            // check if missile has reached the top of the screen
+            if (heroMissilePosition < 0) {
+                clearInterval(heroMissileInterval)
+            } else {
+                cells[heroMissilePosition].classList.add('heroMissile')
+            }
+        }, 200)
     }
 }
 
-    // const key = event.keyCode
-    
-    // const space = 32
-    // const right = 39
-    
-    // removeHero()
-    
-    // if (key === left && heroCurrentPosition > cellCount - width) {
-    //     console.log('LEFT')
-    //     heroCurrentPosition--
-    // } else if (key === right && heroCurrentPosition < cellCount - 1) {
-    //     console.log('RIGHT')
-    //     heroCurrentPosition++
-    // } else {
-    //     console.log('INVALID KEY')
-    // }
-    
-    // addHero(heroCurrentPosition)
-// }
 
 // ? Alien shoot
 // Will need a bottom row alien to be randomly selected to fire a missile at the user. 
