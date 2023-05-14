@@ -17,20 +17,25 @@ let heroCurrentPosition = heroStartingPosition
 
 // ? Alien configuration - an array for the alive aliens at the start of the game - nested arrays/sep
 
-let alienPositions = [17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41]
+// let alienPositions = [17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41]
+let alienPositions = [5, 6, 7, 8, 9, 10, 19, 20, 21, 22, 23, 24, 25, 26, 35, 36, 37, 38, 39, 40]
 
 // ? Shields - need arrays for the locations of the 4 shields
 
-const allShields = [
-    [152, 153],
-    [155, 156],
-    [158, 159],
-    [161, 162]
-]
+// const allShields = [
+//     [152, 153],
+//     [155, 156],
+//     [158, 159],
+//     [161, 162]
+// ]
+
+const allShields = [152, 153, 155, 156, 158, 159, 161, 162]
 
 // ? Buttons - play, restart and mute
 // ? Music and sounds for missiles and hits and win
 // ? HUD - lives and score
+
+let score = 0
 
 // ! ---- event listeners ----*/
 // will need an event listener for handling a player directional
@@ -72,7 +77,8 @@ function startGame() {
     addShields(allShields)
     let alienDirection = 'right'
     // startAlienMovement()
-    rndAlienSelectedForMissile()
+    startAlienMissile()
+    // alienHitByMissile()
     gameOver()
 }
 
@@ -139,14 +145,22 @@ function removeAliens() {
 
 // ? Adding shields
 
+// function addShields() {
+//     allShields.forEach(shields => {
+//         console.log('Shield added to the following cell ->', shields)
+//         shields.forEach(shield => {
+//             cells[shield].classList.add('shield')
+//         })
+//     })
+// }
+
 function addShields() {
-    allShields.forEach(shields => {
-        console.log('Shield added to the following cell ->', shields)
-        shields.forEach(shield => {
-            cells[shield].classList.add('shield')
-        })
+    allShields.forEach(shield => {
+        console.log('Shield added to the following cell ->', shield)
+        cells[shield].classList.add('shield')
     })
 }
+
 
 
 // ? Alien Movement
@@ -221,6 +235,17 @@ function shootHeroMissile(event) {
             // check if missile has reached the top of the screen
             if (heroMissilePosition < 0) {
                 clearInterval(heroMissileInterval)
+            // check if missile has 'hit' an alien
+            } else if (cells[heroMissilePosition].classList.contains('alien')) {
+                clearInterval(heroMissileInterval)
+                // const hitAlienIdx = alienPositions.indexOf(heroMissilePosition)
+                cells[heroMissilePosition].classList.remove('alien', 'heroMissile')
+                alienPositions.splice(alienPositions.indexOf(heroMissilePosition), 1)
+                score += 10
+                console.log('Alien removed from following cell ->', heroMissilePosition)
+                //! remove alien from alienPos and update a score?
+                //! add same hit reg for shields
+                // update hero missile up the column if not
             } else {
                 cells[heroMissilePosition].classList.add('heroMissile')
             }
@@ -237,10 +262,17 @@ function shootHeroMissile(event) {
 // Update class of cell of the missile as it moves down the column, until the
 // missile goes off screen
 
-// function alienMissileInterval() {
-// }
 
-function rndAlienSelectedForMissile() {
+
+function startAlienMissile() {
+    alienMissileFrequency = setInterval(shootAlienMissile, 4000);
+}  
+  
+function stopAlienMissile() {
+    clearInterval(alienMissileFrequency)
+}
+
+function shootAlienMissile() {
     // finding last available alien
     const lastAlien = alienPositions.slice(-1)
     // to find the start of the last row
@@ -254,6 +286,9 @@ function rndAlienSelectedForMissile() {
             bottomRowAliens.push(i)
         }
     }
+
+    // ! add an if function to check if bottomRowAliens.length > 0 to initiate firing, 
+    // ! if not, there are no aliens so player wins & call stopAlienMissile
 
     // selecting one of the bottom row aliens
     const rndIdxOfBottomRowAliens = Math.floor(Math.random() * bottomRowAliens.length)
@@ -287,6 +322,13 @@ function rndAlienSelectedForMissile() {
 // Or, need to look into collision detection but based on brief research so 
 // far, use the rectangle hit boxes and if they overlap it's a hit?
 // Update score as each alien is hit
+
+// function alienHitByMissile() {
+//     if (cells[heroMissilePosition.classList.contains('alien')]) {
+//         clearInterval(heroMissileInterval)
+//         cells[heroMissilePosition].classList.remove('alien', 'heroMissile')
+//     }
+// }
 
 // ? Check if player has been hit
 // Similar to above, use collision or where the class of alien missile and
