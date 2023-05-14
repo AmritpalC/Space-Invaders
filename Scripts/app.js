@@ -37,9 +37,13 @@ const allShields = [137, 138, 140, 141, 143, 144, 146, 147]
 // ? HUD - lives and score
 
 let lives = 3
+const playerLives = document.getElementById('lives')
+
+let level = 1
+const gameLevel = document.getElementById('level')
 
 let score = 0
-const playerScore = document.getElementById('Score')
+const playerScore = document.getElementById('score')
 
 // ! ---- event listeners ----*/
 // will need an event listener for handling a player directional
@@ -80,10 +84,8 @@ function startGame() {
     addAliens(alienPositions)
     addShields(allShields)
     let alienDirection = 'right'
-    // startAlienMovement()
+    startAlienMovement()
     startAlienMissile()
-    // alienHitByMissile()
-    gameOver()
 }
 
 // ? Hero movement - hero classes
@@ -109,10 +111,8 @@ function removeHero() {
 
 function handleHeroMovememnt(event){
     const key = event.keyCode
-    
     const left = 37
     const right = 39
-    
     removeHero()
     
     if (key === left && heroCurrentPosition > cellCount - width) {
@@ -124,7 +124,6 @@ function handleHeroMovememnt(event){
     } else {
         console.log('INVALID KEY')
     }
-    
     addHero(heroCurrentPosition)
 }
 
@@ -135,14 +134,14 @@ function handleHeroMovememnt(event){
 
 function addAliens() {
     alienPositions.forEach(alien => {
-        console.log('Enemy added to the following cell ->', alien)
+        // console.log('Enemy added to the following cell ->', alien)
         cells[alien].classList.add('alien')
     })
 }
 
 function removeAliens() {
     alienPositions.forEach(alien => {
-        console.log('Enemy removed')
+        // console.log('Enemy removed')
         cells[alien].classList.remove('alien')
     })
 }
@@ -199,9 +198,10 @@ function moveAliens() {
         alienPositions = alienPositions.map(alien => alien + width)
         alienDirection = alienDirection === "left" ? "right" : "left"
         addAliens()
+        gameOver()
         return
     }
-
+    playerWin()
     removeAliens()
     alienPositions = alienPositions.map(alien => alien + (alienDirection === "left" ? -1 : 1))
     addAliens()
@@ -246,6 +246,7 @@ function shootHeroMissile(event) {
                 alienPositions.splice(alienPositions.indexOf(heroMissilePosition), 1)
                 score += 10
                 playerScore.textContent = `Score: ${score}`
+                playerWin()
                 console.log('Alien removed from following cell ->', heroMissilePosition)
             // check if missile has 'hit' a shield
             } else if (cells[heroMissilePosition].classList.contains('shield')) {
@@ -259,7 +260,7 @@ function shootHeroMissile(event) {
             } else {
                 cells[heroMissilePosition].classList.add('heroMissile')
             }
-        }, 200)
+        }, 10)
     }
 }
 
@@ -289,8 +290,6 @@ function shootAlienMissile() {
     const startOfBottowRowAliens = Math.floor(lastAlien / width) * width
     const bottomRowAliens = []
 
-    // new array for the bottom line created and iterating over the bottom line
-    // to find all possible aliens, and pushing them into the new array
     for (let i = startOfBottowRowAliens; i <= lastAlien; i++) {
         if (cells[i].classList.contains('alien')) {
             bottomRowAliens.push(i)
@@ -318,10 +317,23 @@ function shootAlienMissile() {
         // check if missile has reached the bottom of the screen
         if (alienMissilePosition > cellCount) {
             clearInterval(alienMissileInterval)
+        } else if (cells[alienMissilePosition].classList.contains('hero')) {
+            removeHero
+            clearInterval(alienMissileInterval)
+            lives--
+            playerLives.textContent = `Lives: ${lives}`
+            console.log('The alien missile hit the hero!')
+            addHero
+            gameOver()
+        } else if (cells[alienMissilePosition].classList.contains('shield')) {
+            cells[alienMissilePosition].classList.remove('shield', 'alienMissile')
+            allShields.splice(allShields.indexOf(alienMissilePosition), 1)
+            clearInterval(alienMissileInterval)
+            console.log('The alien missile destroyed the shield from the following cell ->', alienMissilePosition)
         } else {
             cells[alienMissilePosition].classList.add('alienMissile')
         }
-    }, 500)
+    }, 1000)
 }
 
 
@@ -333,12 +345,6 @@ function shootAlienMissile() {
 // far, use the rectangle hit boxes and if they overlap it's a hit?
 // Update score as each alien is hit
 
-// function alienHitByMissile() {
-//     if (cells[heroMissilePosition.classList.contains('alien')]) {
-//         clearInterval(heroMissileInterval)
-//         cells[heroMissilePosition].classList.remove('alien', 'heroMissile')
-//     }
-// }
 
 // ? Check if player has been hit
 // Similar to above, use collision or where the class of alien missile and
@@ -348,6 +354,17 @@ function shootAlienMissile() {
 // ? Player Wins
 // When there are no aliens left - so no aliens in the aliens array?
 
+function playerWin() {
+    if (alienPositions.length === 0) {
+        stopAlienMovement()
+        stopAlienMissile()
+        console.log('You win! The aliens were defeated!')
+    } else {
+        return
+    }
+}
+
+
 // ? Player loses 
 // No lives lift --> so lives equal to 0
 // Aliens reach 'earth' so reach the same row as the player
@@ -355,13 +372,21 @@ function shootAlienMissile() {
 function gameOver() {
     let aliensReachedEarth = (alienPositions.some((alien) => (alien >= cellCount - width)))
     // or try if alien === cellCount - 1  --> i.e when the aliens reach cell 179 (bottom right)
-    if (aliensReachedEarth) {
+    if ((aliensReachedEarth) || lives === 0) {
         stopAlienMovement()
-        console.log('Game over! The aliens have invaded Earth!')
+        stopAlienMissile()
+        // clearInterval(alienMissileInterval) //! this isn't accessible outside of that function
+        removeHero()
+        document.removeEventListener('keydown', shootHeroMissile)
+        // if (aliensReachedEarth) {
+        console.log((aliensReachedEarth) ? 'Game over! The aliens have invaded Earth!' : 'Game over! You ran out of lives!')
+        // } else {
+        //     console.log('Game over! You ran out of lives!')
     } else {
-        return
+    return
     }
 }
+// }
 
 
 
@@ -370,3 +395,5 @@ createGrid()
 startGame()
 // start game function - render the elements to the DOM
 // function to toggle screen from start screen to game play?
+
+// window.addEventListener('DOMContentLoaded', startGame)
