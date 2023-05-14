@@ -72,6 +72,7 @@ function startGame() {
     addShields(allShields)
     let alienDirection = 'right'
     // startAlienMovement()
+    rndAlienSelectedForMissile()
     gameOver()
 }
 
@@ -235,6 +236,50 @@ function shootHeroMissile(event) {
 // an alien from the list? Might be a cleaner way.
 // Update class of cell of the missile as it moves down the column, until the
 // missile goes off screen
+
+// function alienMissileInterval() {
+// }
+
+function rndAlienSelectedForMissile() {
+    // finding last available alien
+    const lastAlien = alienPositions.slice(-1)
+    // to find the start of the last row
+    const startOfBottowRowAliens = Math.floor(lastAlien / width) * width
+    const bottomRowAliens = []
+
+    // new array for the bottom line created and iterating over the bottom line
+    // to find all possible aliens, and pushing them into the new array
+    for (let i = startOfBottowRowAliens; i <= lastAlien; i++) {
+        if (cells[i].classList.contains('alien')) {
+            bottomRowAliens.push(i)
+        }
+    }
+
+    // selecting one of the bottom row aliens
+    const rndIdxOfBottomRowAliens = Math.floor(Math.random() * bottomRowAliens.length)
+    const rndAlienSelected = bottomRowAliens[rndIdxOfBottomRowAliens]
+    console.log('Randomly selected alien ->', rndAlienSelected)
+
+    // applying the alien missile image
+    const alienMissile = document.createElement('div')
+    let alienMissilePosition = rndAlienSelected + width
+    cells[alienMissilePosition].classList.add('alienMissile')
+
+    // getting missile to move down once it's fired
+    const alienMissileInterval = setInterval(() => {
+        cells[alienMissilePosition].classList.remove('alienMissile')
+        alienMissilePosition += width
+
+        // check if missile has reached the bottom of the screen
+        if (alienMissilePosition > cellCount) {
+            clearInterval(alienMissileInterval)
+        } else {
+            cells[alienMissilePosition].classList.add('alienMissile')
+        }
+    }, 500)
+}
+
+
 
 // ? Check if an alien has been hit
 // Where the classes of players missile and alien position are the same, that 
