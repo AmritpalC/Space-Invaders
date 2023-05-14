@@ -29,13 +29,17 @@ let alienPositions = [5, 6, 7, 8, 9, 10, 19, 20, 21, 22, 23, 24, 25, 26, 35, 36,
 //     [161, 162]
 // ]
 
-const allShields = [152, 153, 155, 156, 158, 159, 161, 162]
+// let allShields = [152, 153, 155, 156, 158, 159, 161, 162]
+const allShields = [137, 138, 140, 141, 143, 144, 146, 147]
 
 // ? Buttons - play, restart and mute
 // ? Music and sounds for missiles and hits and win
 // ? HUD - lives and score
 
+let lives = 3
+
 let score = 0
+const playerScore = document.getElementById('Score')
 
 // ! ---- event listeners ----*/
 // will need an event listener for handling a player directional
@@ -238,13 +242,19 @@ function shootHeroMissile(event) {
             // check if missile has 'hit' an alien
             } else if (cells[heroMissilePosition].classList.contains('alien')) {
                 clearInterval(heroMissileInterval)
-                // const hitAlienIdx = alienPositions.indexOf(heroMissilePosition)
                 cells[heroMissilePosition].classList.remove('alien', 'heroMissile')
                 alienPositions.splice(alienPositions.indexOf(heroMissilePosition), 1)
                 score += 10
+                playerScore.textContent = `Score: ${score}`
                 console.log('Alien removed from following cell ->', heroMissilePosition)
-                //! remove alien from alienPos and update a score?
-                //! add same hit reg for shields
+            // check if missile has 'hit' a shield
+            } else if (cells[heroMissilePosition].classList.contains('shield')) {
+                clearInterval(heroMissileInterval)
+                cells[heroMissilePosition].classList.remove('shield', 'heroMissile')
+                // const shieldIdx = allShields.indexOf(heroMissilePosition)
+                // console.log('Shield index:', shieldIdx, 'Shield array:', allShields)
+                allShields.splice(allShields.indexOf(heroMissilePosition), 1)
+                console.log('Shield removed from following cell ->', heroMissilePosition)
                 // update hero missile up the column if not
             } else {
                 cells[heroMissilePosition].classList.add('heroMissile')
