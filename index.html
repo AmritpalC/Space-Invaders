@@ -13,17 +13,19 @@
     <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono&display=swap" rel="stylesheet">
 </head>
 <body>
+    <audio id="bgMusic" src="./Assets/bg music.mp3" loop></audio>
     <header>
         <div id="title">Saiyan Invaders</div>
         <div class="buttons">
-            <button id="play-btn">Play</button>
             <button id="restart-btn">Restart</button>
-            <button id="sound-btn">Sound</button>
+            <button id="music-btn">Toggle Music</button>
+            <button id="sound-btn">Toggle Sounds</button>
         </div>
     </header>
     <main>
         <div id="landing-page">
             <h1 id="welcome">Welcome to Saiyan Invaders!</h1>
+            <button id="play-btn">Play</button>
             <h1 id="game-over"></h1>
             <h1 id="player-win"></h1>
         </div>
@@ -39,6 +41,7 @@
                     <li>Move Goku using the left and right keys</li></br>
                     <li>Shoot kamehamehas using the space bar</li></br>
                     <li>Watch out for enemy ki blasts! If you are hit, you will lose a life. Take cover behind the shields or DODGE!</li></br>
+                    <li>If the enemies reach the earth, or you run out of lives, you lose!</li></br>                   
                     <li>Eliminate all of Frieza's forces to win the game!</li>                   
                 </ul>
             </div>

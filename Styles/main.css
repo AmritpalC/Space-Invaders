@@ -34,6 +34,7 @@ main {
 
 #landing-page {
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
     height: 90vh;
@@ -100,7 +101,7 @@ main {
 }
 
 .grid div.alienMissile {
-    background: url("../Assets/Enemy ki blast copy.jpeg") no-repeat center;
+    background: url("../Assets/Enemy ki blast round.jpeg") no-repeat center;
     background-size: cover;
 }
 
@@ -131,24 +132,5 @@ button {
     font-size: 4vh;
     outline: none;
 }
-
-/* #landing-page gameOverMessage {
-    display: flex;
-    justify-content: center;
-    align-content: center;
-} */
-
-/* old title size - 2rem, old button size - 1.5rem */
-
-/* Will style the loading page 
-
-/* Will create a grid class with cells with their own class within this
-
-// Will set up as a flex box and use viewport units so that the design 
-is responsive
-
-// Will apply the images of the aliens and player characters by styling the
-divs of the respective cell(s) which is the current location of the user 
-(and locations of the aliens) 
 
 
