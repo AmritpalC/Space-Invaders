@@ -32,9 +32,15 @@ let alienPositions = [5, 6, 7, 8, 9, 10, 19, 20, 21, 22, 23, 24, 25, 26, 35, 36,
 // let allShields = [152, 153, 155, 156, 158, 159, 161, 162]
 const allShields = [137, 138, 140, 141, 143, 144, 146, 147]
 
-// ? Buttons - play, restart and mute
-// ? Music and sounds for missiles and hits and win
-// ? HUD - lives and score
+// ! Buttons - play, restart and mute
+const playBtn = document.getElementById("play-btn")
+const landingPage = document.getElementById("landing-page")
+const gamePage = document.getElementById("game-page")
+gamePage.style.visibility = 'hidden'
+// ! Music and sounds for missiles and hits and win
+
+
+// !HUD - lives and score
 
 let lives = 3
 const playerLives = document.getElementById('lives')
@@ -48,6 +54,11 @@ const playerScore = document.getElementById('score')
 // ! ---- event listeners ----*/
 // will need an event listener for handling a player directional
 //move - so left (-= 1) or right (+= 1) along the x axis
+playBtn.addEventListener('click', () => {
+    landingPage.style.display = 'none'
+    gamePage.style.visibility = 'visible'
+})
+
 document.addEventListener('keydown', handleHeroMovememnt)
 document.addEventListener('keydown', shootHeroMissile)
 
@@ -100,12 +111,12 @@ function startGame() {
 // Imagine we can have another method for the player firing their missiles
 
 function addHero(position) {
-    console.log('Hero added to the following cell ->', position)
+    // console.log('Hero added to the following cell ->', position)
     cells[position].classList.add('hero')
 }
 
 function removeHero() {
-    console.log('Hero removed')
+    // console.log('Hero removed')
     cells[heroCurrentPosition].classList.remove('hero')
 }
 
@@ -116,13 +127,13 @@ function handleHeroMovememnt(event){
     removeHero()
     
     if (key === left && heroCurrentPosition > cellCount - width) {
-        console.log('LEFT')
+        // console.log('LEFT')
         heroCurrentPosition--
     } else if (key === right && heroCurrentPosition < cellCount - 1) {
-        console.log('RIGHT')
+        // console.log('RIGHT')
         heroCurrentPosition++
     } else {
-        console.log('INVALID KEY')
+        // console.log('INVALID KEY')
     }
     addHero(heroCurrentPosition)
 }
@@ -159,7 +170,7 @@ function removeAliens() {
 
 function addShields() {
     allShields.forEach(shield => {
-        console.log('Shield added to the following cell ->', shield)
+        // console.log('Shield added to the following cell ->', shield)
         cells[shield].classList.add('shield')
     })
 }
@@ -247,7 +258,7 @@ function shootHeroMissile(event) {
                 score += 10
                 playerScore.textContent = `Score: ${score}`
                 playerWin()
-                console.log('Alien removed from following cell ->', heroMissilePosition)
+                // console.log('Alien removed from following cell ->', heroMissilePosition)
             // check if missile has 'hit' a shield
             } else if (cells[heroMissilePosition].classList.contains('shield')) {
                 clearInterval(heroMissileInterval)
@@ -255,7 +266,7 @@ function shootHeroMissile(event) {
                 // const shieldIdx = allShields.indexOf(heroMissilePosition)
                 // console.log('Shield index:', shieldIdx, 'Shield array:', allShields)
                 allShields.splice(allShields.indexOf(heroMissilePosition), 1)
-                console.log('Shield removed from following cell ->', heroMissilePosition)
+                // console.log('Shield removed from following cell ->', heroMissilePosition)
                 // update hero missile up the column if not
             } else {
                 cells[heroMissilePosition].classList.add('heroMissile')
@@ -276,7 +287,7 @@ function shootHeroMissile(event) {
 
 
 function startAlienMissile() {
-    alienMissileFrequency = setInterval(shootAlienMissile, 4000);
+    alienMissileFrequency = setInterval(shootAlienMissile, 2000);
 }  
   
 function stopAlienMissile() {
@@ -296,13 +307,19 @@ function shootAlienMissile() {
         }
     }
 
+    if (bottomRowAliens.length === 0) {
+        stopAlienMissile()
+        playerWin()
+        return
+    }
+
     // ! add an if function to check if bottomRowAliens.length > 0 to initiate firing, 
     // ! if not, there are no aliens so player wins & call stopAlienMissile
 
     // selecting one of the bottom row aliens
     const rndIdxOfBottomRowAliens = Math.floor(Math.random() * bottomRowAliens.length)
     const rndAlienSelected = bottomRowAliens[rndIdxOfBottomRowAliens]
-    console.log('Randomly selected alien ->', rndAlienSelected)
+    // console.log('Randomly selected alien ->', rndAlienSelected)
 
     // applying the alien missile image
     const alienMissile = document.createElement('div')
@@ -314,7 +331,7 @@ function shootAlienMissile() {
         cells[alienMissilePosition].classList.remove('alienMissile')
         alienMissilePosition += width
 
-        // check if missile has reached the bottom of the screen
+        // check if missile has reached the bottom of the screen & setting missile 'speed'
         if (alienMissilePosition > cellCount) {
             clearInterval(alienMissileInterval)
         } else if (cells[alienMissilePosition].classList.contains('hero')) {
@@ -322,14 +339,14 @@ function shootAlienMissile() {
             clearInterval(alienMissileInterval)
             lives--
             playerLives.textContent = `Lives: ${lives}`
-            console.log('The alien missile hit the hero!')
+            // console.log('The alien missile hit the hero!')
             addHero
             gameOver()
         } else if (cells[alienMissilePosition].classList.contains('shield')) {
             cells[alienMissilePosition].classList.remove('shield', 'alienMissile')
             allShields.splice(allShields.indexOf(alienMissilePosition), 1)
             clearInterval(alienMissileInterval)
-            console.log('The alien missile destroyed the shield from the following cell ->', alienMissilePosition)
+            // console.log('The alien missile destroyed the shield from the following cell ->', alienMissilePosition)
         } else {
             cells[alienMissilePosition].classList.add('alienMissile')
         }
@@ -378,10 +395,21 @@ function gameOver() {
         // clearInterval(alienMissileInterval) //! this isn't accessible outside of that function
         removeHero()
         document.removeEventListener('keydown', shootHeroMissile)
-        // if (aliensReachedEarth) {
-        console.log((aliensReachedEarth) ? 'Game over! The aliens have invaded Earth!' : 'Game over! You ran out of lives!')
-        // } else {
-        //     console.log('Game over! You ran out of lives!')
+        
+        // const gameOverDiv = document.createElement('div')
+        // gameOverDiv.setAttribute('id','gameOverMessage')
+        // gameOverDiv.textContent = (aliensReachedEarth) ? 'Game over! The aliens have invaded Earth!' : 'Game over! You ran out of lives!'
+        // // document.main.appendChild(gameOverMessage)
+        // gamePage.style.display = 'none'
+        // landingPage.style.display = 'block'
+        // document.getElementById('welcome').style.display = 'none'
+        // landingPage.appendChild(gameOverDiv)
+        
+        const gameOverMessage = document.getElementById('game-over')
+        gameOverMessage.textContent = (aliensReachedEarth) ? 'Game over! The aliens have invaded Earth!' : 'Game over! You ran out of lives!'
+        gamePage.style.display = 'none'
+        landingPage.style.display = 'block'
+        document.getElementById('welcome').style.display = 'none'
     } else {
     return
     }

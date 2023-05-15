@@ -15,6 +15,7 @@ header {
     display: flex;
     justify-content: space-around;
     border: 2px solid orange;
+    font-size: 6vh;
 }
 
 #title {
@@ -24,11 +25,34 @@ header {
 }
 
 main {
+    /* display: flex;
+    justify-content: flex-start;
+    gap: 10vh;
+    align-items: center; */
+    border: 3px solid lime;
+}
+
+#landing-page {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 90vh;
+    font-size: 1.8rem;
+    text-align: center;
+    color: lime
+  }
+  
+/* #landing-page h1 {
+    font-size: 3rem;
+    text-align: center;
+    color: lime;
+  } */
+
+#game-page {
     display: flex;
     justify-content: flex-start;
     gap: 10vh;
-    /* align-items: center; */
-    border: 3px solid lime;
+    align-items: center;
 }
 
 .grid-wrapper {
@@ -51,31 +75,31 @@ main {
     width: 90vh;
   }
 
-.grid > div {
+.grid div {
     border: 1px solid lightgoldenrodyellow;
 }
 
-.grid > div.hero {
+.grid div.hero {
     background: url("../Assets/UI Goku pixel.png") no-repeat center;
     background-size: cover;
 }
 
-.grid > div.alien {
+.grid div.alien {
     background: url("../Assets/Frieza.png") no-repeat center;
     background-size: cover;
 }
 
-.grid > div.shield {
+.grid div.shield {
     background: url("../Assets/Aura-shield.png") no-repeat center;
     background-size: cover;
 }
 
-.grid > div.heroMissile {
+.grid div.heroMissile {
     background: url("../Assets/Kamehameha.png") no-repeat center;
     background-size: cover;
 }
 
-.grid > div.alienMissile {
+.grid div.alienMissile {
     background: url("../Assets/Enemy ki blast copy.jpeg") no-repeat center;
     background-size: cover;
 }
@@ -87,7 +111,7 @@ main {
     align-items: center;
     background-color: black;
     color: white;
-    font-size: 0.9vw;
+    font-size: 1vw;
     width: 30vh;
     height: 80vh;
     border: 3px solid red;
@@ -104,7 +128,17 @@ button {
     font-family: 'Roboto Mono', monospace;
     background-color: black;
     color: orange;
+    font-size: 4vh;
+    outline: none;
 }
+
+#landing-page gameOverMessage {
+    display: flex;
+    justify-content: center;
+    align-content: center;
+}
+
+/* old title size - 2rem, old button size - 1.5rem */
 
 /* Will style the loading page 
 
