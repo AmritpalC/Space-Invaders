@@ -37,3 +37,19 @@ The main challenge here is the movement of large groups of aliens in formation, 
 * Refactor your code as you go
 * Make sure you have a good idea of what your MVP is and only add extra features once you have achieved it
 * Do just enough styling to get started, then once you have your MVP polish up the styling before moving on
+
+
+A README.md file with these sections:
+
+☐ Your game's title>: A description of your game. Background info of the game is a nice touch.
+
+☐ Screenshot(s): Images of your actual game.
+
+☐ Technologies Used: List of the technologies used, e.g., JavaScript, HTML, CSS...
+
+☐ Getting Started: In this section include the link to your deployed game and any instructions you deem important.
+
+☐ Next Steps: Planned future enhancements (icebox items).
+- Levels - increase difficulty with faster alien movement &/ faster alien missiles
+- Power ups - player missile speed boost / potential super move that eliminates all aliens
+

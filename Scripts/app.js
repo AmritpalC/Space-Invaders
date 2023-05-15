@@ -57,10 +57,12 @@ const playerScore = document.getElementById('score')
 playBtn.addEventListener('click', () => {
     landingPage.style.display = 'none'
     gamePage.style.visibility = 'visible'
+    startGame()
 })
 
 document.addEventListener('keydown', handleHeroMovememnt)
 document.addEventListener('keydown', shootHeroMissile)
+
 
 
 // will also need an event listener for the space bar - to fire a missile
@@ -121,19 +123,16 @@ function removeHero() {
 }
 
 function handleHeroMovememnt(event){
-    const key = event.keyCode
-    const left = 37
-    const right = 39
     removeHero()
-    
-    if (key === left && heroCurrentPosition > cellCount - width) {
+    if (event.key === 'ArrowLeft' && heroCurrentPosition > cellCount - width) {
         // console.log('LEFT')
         heroCurrentPosition--
-    } else if (key === right && heroCurrentPosition < cellCount - 1) {
+    } else if (event.key === 'ArrowRight' && heroCurrentPosition < cellCount - 1) {
         // console.log('RIGHT')
         heroCurrentPosition++
-    } else {
-        // console.log('INVALID KEY')
+    } else if (event.key !== ' ' && event.key !== 'ArrowLeft' && event.key !== 'ArrowRight') {
+        event.preventDefault()
+        console.log('Invalid Key')
     }
     addHero(heroCurrentPosition)
 }
@@ -350,7 +349,7 @@ function shootAlienMissile() {
         } else {
             cells[alienMissilePosition].classList.add('alienMissile')
         }
-    }, 1000)
+    }, 250)
 }
 
 
@@ -375,7 +374,12 @@ function playerWin() {
     if (alienPositions.length === 0) {
         stopAlienMovement()
         stopAlienMissile()
-        console.log('You win! The aliens were defeated!')
+        const playerWinMessage = document.getElementById('player-win')
+        playerWinMessage.textContent = `Kamehamehahahaha! You have stopped Frieza and his army of clones! Your score is ${score}!`
+        gamePage.style.display = 'none'
+        landingPage.style.display = 'block'
+        document.getElementById('welcome').style.display = 'none'
+        // console.log('You win! The aliens were defeated!')
     } else {
         return
     }
@@ -406,7 +410,7 @@ function gameOver() {
         // landingPage.appendChild(gameOverDiv)
         
         const gameOverMessage = document.getElementById('game-over')
-        gameOverMessage.textContent = (aliensReachedEarth) ? 'Game over! The aliens have invaded Earth!' : 'Game over! You ran out of lives!'
+        gameOverMessage.textContent = (aliensReachedEarth) ? `Game over! The aliens have invaded Earth! Your final score is ${score}!` : `Game over! You ran out of lives! Your final score is ${score}!`
         gamePage.style.display = 'none'
         landingPage.style.display = 'block'
         document.getElementById('welcome').style.display = 'none'
@@ -420,7 +424,7 @@ function gameOver() {
 
 // ! ---- Page load (initialise game) ----*/
 createGrid()
-startGame()
+// startGame()
 // start game function - render the elements to the DOM
 // function to toggle screen from start screen to game play?
 

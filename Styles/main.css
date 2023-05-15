@@ -37,7 +37,7 @@ main {
     justify-content: center;
     align-items: center;
     height: 90vh;
-    font-size: 1.8rem;
+    font-size: 4vh;
     text-align: center;
     color: lime
   }
@@ -75,9 +75,9 @@ main {
     width: 90vh;
   }
 
-.grid div {
+/* .grid div {
     border: 1px solid lightgoldenrodyellow;
-}
+} */
 
 .grid div.hero {
     background: url("../Assets/UI Goku pixel.png") no-repeat center;
@@ -132,11 +132,11 @@ button {
     outline: none;
 }
 
-#landing-page gameOverMessage {
+/* #landing-page gameOverMessage {
     display: flex;
     justify-content: center;
     align-content: center;
-}
+} */
 
 /* old title size - 2rem, old button size - 1.5rem */
 
