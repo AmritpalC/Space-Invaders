@@ -15,7 +15,6 @@ header {
     display: flex;
     justify-content: space-around;
     border: 2px solid orange;
-    /* font-size: 10vh; */
 }
 
 #title {
@@ -26,10 +25,7 @@ header {
 }
 
 main {
-    /* display: flex;
-    justify-content: flex-start;
-    gap: 10vh;
-    align-items: center; */
+    height: 80vh;
     border: 3px solid lime;
 }
 
@@ -39,17 +35,11 @@ main {
     justify-content: center;
     align-items: center;
     height: 90vh;
-    font-size: 4vh;
+    font-size: 3.5vh;
     text-align: center;
     color: lime
-  }
+}
   
-/* #landing-page h1 {
-    font-size: 3rem;
-    text-align: center;
-    color: lime;
-  } */
-
 #game-page {
     display: flex;
     justify-content: flex-start;
@@ -62,7 +52,6 @@ main {
     justify-content: center;
     align-items: center;
     height: 80vh;
-    width: 90vh;
     background-color: black;
     border: 3px solid blue;
 }
@@ -72,27 +61,22 @@ main {
     justify-content: center;
     align-items: center;
     flex-wrap: wrap;
-    /* box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2); */
     height: 80vh;
     width: 90vh;
   }
 
-/* .grid div {
-    border: 1px solid lightgoldenrodyellow;
-} */
-
 .grid div.hero {
-    background: url("../Assets/GokuNoBg.webp") no-repeat center;
+    background: url("../Assets/Goku.webp") no-repeat center;
     background-size: cover;
 }
 
 .grid div.alien {
-    background: url("../Assets/Frieza.png") no-repeat center;
+    background: url("../Assets/Frieza3.webp") no-repeat center;
     background-size: cover;
 }
 
 .grid div.shield {
-    background: url("../Assets/Aura-shield.png") no-repeat center;
+    background: url("../Assets/Shield.png") no-repeat center;
     background-size: cover;
 }
 
@@ -102,7 +86,7 @@ main {
 }
 
 .grid div.alienMissile {
-    background: url("../Assets/Enemy ki blast round.jpeg") no-repeat center;
+    background: url("../Assets/FriezaBeam.png") no-repeat center;
     background-size: cover;
 }
 
@@ -113,10 +97,11 @@ main {
     align-items: center;
     background-color: black;
     color: white;
-    font-size: 1vw;
-    width: 30vh;
+    font-size: 1.8vh;
+    width: 30vw;
     height: 80vh;
     border: 3px solid red;
+    padding-right: 2%;
 }
 
 .HUD {
@@ -124,6 +109,7 @@ main {
     justify-content: space-around;
     background-color: slateblue;
     border: 2px solid magenta;
+    font-size: 3vh;
 }
 
 button {
