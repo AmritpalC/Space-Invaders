@@ -14,13 +14,15 @@ body {
 header {
     display: flex;
     justify-content: space-around;
+    align-items: center;
     border: 2px solid orange;
+    background-color: black;
 }
 
 #title {
     background-color: black;
     padding: 0 1vmin;
-    border: 2px solid aqua;
+    /* border: 2px solid aqua; */
     font-size: 5vh;
 }
 
@@ -114,10 +116,15 @@ main {
 
 button {
     font-family: 'Roboto Mono', monospace;
-    background-color: black;
+    background-color: grey;
     color: orange;
     font-size: 3vh;
     outline: none;
+    cursor: pointer;
+}
+
+button:hover {
+    box-shadow: 5px 5px 5px 0px rgba(64, 188, 136, 0.7);
 }
 
 

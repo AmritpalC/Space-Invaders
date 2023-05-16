@@ -40,8 +40,9 @@ heroHitSound.volume = 0.7
 const alienHitSound = document.getElementById("alienHitSound")
 alienHitSound.playbackRate = 3
 const shieldHitSound = document.getElementById("shieldHitSound")
-shieldHitSound.volume = 0.7
+shieldHitSound.volume = 0.6
 const playerWinsSound = document.getElementById("playerWinsSound")
+playerWinsSound.volume = 0.7
 const gameOverSound = document.getElementById("gameOverSound")
 
 // !HUD - lives and score
@@ -62,7 +63,10 @@ playBtn.addEventListener('click', () => {
 })
 
 musicBtn.addEventListener('click', toggleBgMusic)
-// restartBtn.addEventListener('click', restart())
+restartBtn.addEventListener('click', function() {
+    location.reload()
+})
+// restartBtn.addEventListener('click', restart)
 
 document.addEventListener('keydown', handleHeroMovememnt)
 document.addEventListener('keydown', shootHeroMissile)
@@ -147,7 +151,6 @@ function moveAliens() {
         gameOver()
         return
     }
-    playerWin()
     removeAliens()
     alienPositions = alienPositions.map(alien => alien + (alienDirection === "left" ? -1 : 1))
     addAliens()
@@ -280,39 +283,41 @@ function gameOver() {
     }
 }
 // ! Restart game not working
+
 // function restart() {
-//     grid.innerHTML = ''
+//     createGrid()
+//     startGame()
 
-//     lives = 3
-//     level = 1
-//     score = 0
-//     heroCurrentPosition = heroStartingPosition  
-//     alienPositions = [5, 6, 7, 8, 9, 10, 19, 20, 21, 22, 23, 24, 25, 26, 35, 36, 37, 38, 39, 40]
-//     allShields = [137, 138, 140, 141, 143, 144, 146, 147]
+    // lives = 3
+    // level = 1
+    // score = 0
+    // heroCurrentPosition = heroStartingPosition  
+    // alienPositions = [5, 6, 7, 8, 9, 10, 19, 20, 21, 22, 23, 24, 25, 26, 35, 36, 37, 38, 39, 40]
+    // allShields = [137, 138, 140, 141, 143, 144, 146, 147]
 
-//     playerLives.textContent = `Lives: ${lives}`;
-//     gameLevel.textContent = `Level: ${level}`;
-//     playerScore.textContent = `Score: ${score}`
+    // playerLives.textContent = `Lives: ${lives}`;
+    // gameLevel.textContent = `Level: ${level}`;
+    // playerScore.textContent = `Score: ${score}`
 
-//     // heroMissilePosition = null
-//     // alienMissilePosition = null
-//     // stopAlienMovement()
-//     // stopAlienMissile()
-//     // createGrid()
-//     // startGame()
+    // // heroMissilePosition = null
+    // // alienMissilePosition = null
+    // // stopAlienMovement()
+    // // stopAlienMissile()
+    // // createGrid()
+    // // startGame()
     
-//     document.getElementById('game-over').style.display = 'none'
-//     document.getElementById('player-win').style.display = 'none'
-//     landingPage.style.display = 'none'
-//     gamePage.style.visibility = 'visible'
+    // document.getElementById('game-over').style.display = 'none'
+    // document.getElementById('player-win').style.display = 'none'
+    // landingPage.style.display = 'none'
+    // gamePage.style.visibility = 'visible'
     
-//     // from startGame()
-//     addHero(heroStartingPosition)
-//     addAliens(alienPositions)
-//     addShields(allShields)
-//     alienDirection = 'right'
-//     startAlienMovement()
-//     startAlienMissile()
+    // // from startGame()
+    // addHero(heroStartingPosition)
+    // addAliens(alienPositions)
+    // addShields(allShields)
+    // alienDirection = 'right'
+    // startAlienMovement()
+    // startAlienMissile()
 // }
 
 // ! ---- Page load (initialise game) ----*/
