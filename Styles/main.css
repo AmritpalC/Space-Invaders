@@ -15,13 +15,14 @@ header {
     display: flex;
     justify-content: space-around;
     border: 2px solid orange;
-    font-size: 6vh;
+    /* font-size: 10vh; */
 }
 
 #title {
     background-color: black;
     padding: 0 1vmin;
     border: 2px solid aqua;
+    font-size: 5vh;
 }
 
 main {
@@ -81,7 +82,7 @@ main {
 } */
 
 .grid div.hero {
-    background: url("../Assets/UI Goku pixel.png") no-repeat center;
+    background: url("../Assets/GokuNoBg.webp") no-repeat center;
     background-size: cover;
 }
 
@@ -129,7 +130,7 @@ button {
     font-family: 'Roboto Mono', monospace;
     background-color: black;
     color: orange;
-    font-size: 4vh;
+    font-size: 3vh;
     outline: none;
 }
 

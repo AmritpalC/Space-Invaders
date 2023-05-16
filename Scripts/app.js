@@ -84,7 +84,7 @@ function startGame() {
     addHero(heroStartingPosition)
     addAliens(alienPositions)
     addShields(allShields)
-    let alienDirection = 'right'
+    // let alienDirection = 'right'
     startAlienMovement()
     startAlienMissile()
 }
@@ -223,11 +223,11 @@ function shootAlienMissile() {
         }
     }
     // if no aliens left, player wins & stopAlienMissile
-    if (bottomRowAliens.length === 0) {
-        stopAlienMissile()
-        playerWin()
-        return
-    }
+    // if (bottomRowAliens.length === 0) {
+    //     // stopAlienMissile()
+    //     playerWin()
+    //     return
+    // }
     // selecting one of the bottom row aliens
     const rndIdxOfBottomRowAliens = Math.floor(Math.random() * bottomRowAliens.length)
     const rndAlienSelected = bottomRowAliens[rndIdxOfBottomRowAliens]
@@ -319,33 +319,28 @@ function gameOver() {
     }
 }
 
-function restart() {
-    gameOver()
-    removeHero()
-    lives = 3
-    level = 1
-    score = 0
-    const heroStartingPosition = 172
-    heroCurrentPosition = heroStartingPosition  
-    alienPositions = [5, 6, 7, 8, 9, 10, 19, 20, 21, 22, 23, 24, 25, 26, 35, 36, 37, 38, 39, 40]
-    allShields = [137, 138, 140, 141, 143, 144, 146, 147]
-    heroMissilePosition = null
-    alienMissilePosition = null
-    stopAlienMovement()
-    stopAlienMissile()
-    createGrid()
-    addHero(heroStartingPosition)
-    addAliens(alienPositions)
-    addShields(allShields)
-    alienDirection = 'right'
-    startAlienMovement()
-    startAlienMissile()
+// function restart() {
+//     gameOver()
+//     removeHero()
+//     lives = 3
+//     level = 1
+//     score = 0
+//     const heroStartingPosition = 172
+//     heroCurrentPosition = heroStartingPosition  
+//     alienPositions = [5, 6, 7, 8, 9, 10, 19, 20, 21, 22, 23, 24, 25, 26, 35, 36, 37, 38, 39, 40]
+//     allShields = [137, 138, 140, 141, 143, 144, 146, 147]
+//     heroMissilePosition = null
+//     alienMissilePosition = null
+//     stopAlienMovement()
+//     stopAlienMissile()
+//     createGrid()
+//     startGame()
     
-    document.getElementById('game-over').style.display = 'none'
-    document.getElementById('player-win').style.display = 'none'
-    landingPage.style.display = 'none'
-    gamePage.style.visibility = 'visible'
-}
+//     document.getElementById('game-over').style.display = 'none'
+//     document.getElementById('player-win').style.display = 'none'
+//     landingPage.style.display = 'none'
+//     gamePage.style.visibility = 'visible'
+// }
 
 // addHero(heroStartingPosition)
 // addAliens(alienPositions)

@@ -14,10 +14,15 @@
 </head>
 <body>
     <audio id="bgMusic" src="./Assets/bg music.mp3" loop></audio>
+    <audio id="heroMissileSound" src="./Assets/bg music.mp3" loop></audio>
+    <audio id="alienMissileSound" src="./Assets/bg music.mp3" loop></audio>
+    <audio id="alienHitSound" src="./Assets/bg music.mp3" loop></audio>
+    <audio id="shieldHitSound" src="./Assets/bg music.mp3" loop></audio>
     <header>
         <div id="title">Saiyan Invaders</div>
         <div class="buttons">
-            <button id="restart-btn">Restart</button>
+            <button id="play-btn">Play</button>
+            <button id="restart-btn play-btn">Restart</button>
             <button id="music-btn">Toggle Music</button>
             <button id="sound-btn">Toggle Sounds</button>
         </div>
@@ -25,7 +30,6 @@
     <main>
         <div id="landing-page">
             <h1 id="welcome">Welcome to Saiyan Invaders!</h1>
-            <button id="play-btn">Play</button>
             <h1 id="game-over"></h1>
             <h1 id="player-win"></h1>
         </div>
