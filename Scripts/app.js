@@ -17,12 +17,12 @@ const landingPage = document.getElementById("landing-page")
 const gamePage = document.getElementById("game-page")
 gamePage.style.visibility = 'hidden'
 
-// ! Buttons - play, restart and mute
+// ! ----Buttons: play, restart and mute ----*/
 const playBtn = document.getElementById("play-btn")
 const restartBtn = document.getElementById("restart-btn")
 const musicBtn = document.getElementById("music-btn")
 
-// ! Music and sounds for missiles and hits and win
+// !  ---- Music and sounds for missiles and hits and win ----*/
 function toggleBgMusic() {
     const bgMusic = document.getElementById('bgMusic')
     bgMusic.volume = 0.9
@@ -30,22 +30,14 @@ function toggleBgMusic() {
 }
 
 const heroMissileSound = document.getElementById("heroMissileSound")
-heroMissileSound.playbackRate = 4
-heroMissileSound.volume = 0.5
 const alienMissileSound = document.getElementById("alienMissileSound")
-alienMissileSound.volume = 0.3
 const heroHitSound = document.getElementById("heroHitSound")
-heroHitSound.playbackRate = 1.2
-heroHitSound.volume = 0.7
 const alienHitSound = document.getElementById("alienHitSound")
-alienHitSound.playbackRate = 3
 const shieldHitSound = document.getElementById("shieldHitSound")
-shieldHitSound.volume = 0.6
 const playerWinsSound = document.getElementById("playerWinsSound")
-playerWinsSound.volume = 0.7
 const gameOverSound = document.getElementById("gameOverSound")
 
-// !HUD - lives and score
+// ! ---- HUD - lives and score ----*/
 let lives = 3
 const playerLives = document.getElementById('lives')
 
@@ -66,7 +58,6 @@ musicBtn.addEventListener('click', toggleBgMusic)
 restartBtn.addEventListener('click', function() {
     location.reload()
 })
-// restartBtn.addEventListener('click', restart)
 
 document.addEventListener('keydown', handleHeroMovememnt)
 document.addEventListener('keydown', shootHeroMissile)
@@ -131,7 +122,7 @@ function removeAliens() {
 }
 
 function startAlienMovement() {
-    alienMoveInterval = setInterval(moveAliens, 1000);
+    alienMoveInterval = setInterval(moveAliens, 500);
 }  
   
 function stopAlienMovement() {
@@ -159,6 +150,8 @@ function moveAliens() {
 function shootHeroMissile(event) {
     if (event.keyCode === 32) {
         event.preventDefault()
+        heroMissileSound.playbackRate = 5
+        heroMissileSound.volume = 0.4
         heroMissileSound.play()
         const heroMissile = document.createElement('div')
         let heroMissilePosition = heroCurrentPosition - width
@@ -175,6 +168,7 @@ function shootHeroMissile(event) {
                 cells[heroMissilePosition].classList.remove('alien', 'heroMissile')
                 alienPositions.splice(alienPositions.indexOf(heroMissilePosition), 1)
                 score += 10
+                alienHitSound.playbackRate = 3
                 alienHitSound.play()
                 playerScore.textContent = `Score: ${score}`
                 playerWin()
@@ -182,16 +176,17 @@ function shootHeroMissile(event) {
                 clearInterval(heroMissileInterval)
                 cells[heroMissilePosition].classList.remove('shield', 'heroMissile')
                 allShields.splice(allShields.indexOf(heroMissilePosition), 1)
+                shieldHitSound.volume = 0.5
                 shieldHitSound.play()
             } else {
                 cells[heroMissilePosition].classList.add('heroMissile')
             }
-        }, 10)
+        }, 250)
     }
 }
 
 function startAlienMissile() {
-    alienMissileFrequency = setInterval(shootAlienMissile, 3000);
+    alienMissileFrequency = setInterval(shootAlienMissile, 1500);
 }  
   
 function stopAlienMissile() {
@@ -220,6 +215,7 @@ function shootAlienMissile() {
     const alienMissile = document.createElement('div')
     let alienMissilePosition = rndAlienSelected + width
     cells[alienMissilePosition].classList.add('alienMissile')
+    alienMissileSound.volume = 0.2
     alienMissileSound.play()
 
     const alienMissileInterval = setInterval(() => {
@@ -229,6 +225,8 @@ function shootAlienMissile() {
         if (alienMissilePosition > cellCount) {
             clearInterval(alienMissileInterval)
         } else if (cells[alienMissilePosition].classList.contains('hero')) {
+            heroHitSound.playbackRate = 1.3
+            heroHitSound.volume = 0.5
             heroHitSound.play()
             removeHero
             clearInterval(alienMissileInterval)
@@ -239,15 +237,16 @@ function shootAlienMissile() {
         } else if (cells[alienMissilePosition].classList.contains('shield')) {
             cells[alienMissilePosition].classList.remove('shield', 'alienMissile')
             allShields.splice(allShields.indexOf(alienMissilePosition), 1)
+            shieldHitSound.volume = 0.5
             shieldHitSound.play()
             clearInterval(alienMissileInterval)
         } else {
             cells[alienMissilePosition].classList.add('alienMissile')
         }
-    }, 500)
+    }, 250)
 }
 
-// ! ---- winning functions ----*/
+// ! ---- winning / losing functions ----*/
 function playerWin() {
     if (alienPositions.length === 0) {
         stopAlienMovement()
@@ -257,6 +256,8 @@ function playerWin() {
         gamePage.style.display = 'none'
         landingPage.style.display = 'block'
         document.getElementById('welcome').style.display = 'none'
+        bgMusic.volume = 0.5
+        playerWinsSound.volume = 0.5
         playerWinsSound.play()
     } else {
         return
@@ -277,48 +278,12 @@ function gameOver() {
         landingPage.style.display = 'block'
         document.getElementById('welcome').style.display = 'none'
         document.getElementById('play-btn').style.display = 'none'
+        bgMusic.volume = 0.5
         gameOverSound.play()
     } else {
         return
     }
 }
-// ! Restart game not working
-
-// function restart() {
-//     createGrid()
-//     startGame()
-
-    // lives = 3
-    // level = 1
-    // score = 0
-    // heroCurrentPosition = heroStartingPosition  
-    // alienPositions = [5, 6, 7, 8, 9, 10, 19, 20, 21, 22, 23, 24, 25, 26, 35, 36, 37, 38, 39, 40]
-    // allShields = [137, 138, 140, 141, 143, 144, 146, 147]
-
-    // playerLives.textContent = `Lives: ${lives}`;
-    // gameLevel.textContent = `Level: ${level}`;
-    // playerScore.textContent = `Score: ${score}`
-
-    // // heroMissilePosition = null
-    // // alienMissilePosition = null
-    // // stopAlienMovement()
-    // // stopAlienMissile()
-    // // createGrid()
-    // // startGame()
-    
-    // document.getElementById('game-over').style.display = 'none'
-    // document.getElementById('player-win').style.display = 'none'
-    // landingPage.style.display = 'none'
-    // gamePage.style.visibility = 'visible'
-    
-    // // from startGame()
-    // addHero(heroStartingPosition)
-    // addAliens(alienPositions)
-    // addShields(allShields)
-    // alienDirection = 'right'
-    // startAlienMovement()
-    // startAlienMissile()
-// }
 
 // ! ---- Page load (initialise game) ----*/
 createGrid()
