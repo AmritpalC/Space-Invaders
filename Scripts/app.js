@@ -148,7 +148,7 @@ function moveAliens() {
 }
 
 function shootHeroMissile(event) {
-    if (event.keyCode === 32) {
+    if (event.key === ' ') {
         event.preventDefault()
         heroMissileSound.playbackRate = 5
         heroMissileSound.volume = 0.4

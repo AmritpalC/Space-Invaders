@@ -1,55 +1,23 @@
 # Space-Invaders
 
-# Space-Invaders
-
-## Suggested Ways to Get Started
-
-* **Break the project down into different components** (data, presentation, views, style, DOM manipulation) and brainstorm each component individually. Use whiteboards!
-* **Use your Development Tools** (console.log, inspector, alert statements, etc) to debug and solve problems
-* Work through the lessons in class & ask questions when you need to! Think about adding relevant code to your game each night, instead of, you know... _procrastinating_.
-* **Commit early, commit often.** Don’t be afraid to break something because you can always go back in time to a previous version.
-* **Consult documentation resources** (MDN, classwork notes, previous homeworks, stack overflow etc.) to better understand what you’ll be getting into.
-* **Don’t be afraid to write code that you know you will have to remove later.** Create temporary elements (buttons, links, etc) that trigger events if real data is not available. For example, if you’re trying to figure out how to change some text when the game is over but you haven’t solved the win/lose game logic, you can create a button to simulate that until then.
-
-
-
-## Requirements
-
-* The player should be able to clear at least one wave of aliens
-* The player's score should be displayed at the end of the game
-
-## Suggested enhancements
-
-* Responsive design
-* Each wave gets more difficult
-* Persistent leaderboard using `localStorage`
-
-## Challenges
-
-The main challenge here is the movement of large groups of aliens in formation, and the animation of the bombs and player's shots. There are several approaches here, with collision detection being the more challenging.
-
-## Tips
-
-* Make sure you spend plenty of time planning _before_ you start coding
-* Make sure you understand all of the rules of the game
-* Make a checklist of all the features you want to add to the game
-* Keep It Stupid Simple
-* Refactor your code as you go
-* Make sure you have a good idea of what your MVP is and only add extra features once you have achieved it
-* Do just enough styling to get started, then once you have your MVP polish up the styling before moving on
-
-
-A README.md file with these sections:
-
-☐ Your game's title>: A description of your game. Background info of the game is a nice touch.
+☐ Title -> Saiyan Invaders. This is a Dragonball Z themed version of the popular Space Invaders aracade game which was originally released in 1978. The aim of the game is to move the shooter horizontally across the bottom of the screen and fire lasers at the aliens overhead. The aliens will move left and right during the game, shifting downward each time the reach a screen edge. The goal is to eliminate the aliens before they reach the bottom of the screen, or the player runs out of lives.
 
 ☐ Screenshot(s): Images of your actual game.
 
-☐ Technologies Used: List of the technologies used, e.g., JavaScript, HTML, CSS...
+![plot](./Assets/Saiyan-Invaders.png)
+
+☐ Technologies Used: HTML, CSS, JavaScript. Wireframe built on Figma, project built using VS Code and deployed online on GitHub.
 
 ☐ Getting Started: In this section include the link to your deployed game and any instructions you deem important.
+Link to the game - https://amritpalc.github.io/Space-Invaders/
+
+Instructions - move the hero using the left and right arrow keys. Use the spacebar to shoot missiles at the aliens! You start with 3 lives and you win by eliminating all the aliens. Make sure to avoid alien missiles whlist you play. You will lose if the aliens reach the bottom of the screen - or you run out of lives.
 
 ☐ Next Steps: Planned future enhancements (icebox items).
-- Levels - increase difficulty with faster alien movement &/ faster alien missiles
+- Levels - increase difficulty with faster alien movement &/ faster alien missiles. Fix restart function to allow levels implementation - perhaps with a class for the game itself
 - Power ups - player missile speed boost / potential super move that eliminates all aliens
+- Alien classes - more alien variety where the aliens could have varying health values - by way of size on the grid or using health values
+- Bug - fix a classList bug which sometimes occurs when there is one alien left on the grid
+- UI - enhdance thh UI and include the instructions on the landing screen. Would like to change the design layout from CSS Flexbox to CSS Grid
+- Collision detection - could include this instead of using class names on the div cells to register missile hit detection
 
