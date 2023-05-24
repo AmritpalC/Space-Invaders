@@ -222,17 +222,15 @@ function shootAlienMissile() {
         cells[alienMissilePosition].classList.remove('alienMissile')
         alienMissilePosition += width
 
-        if (alienMissilePosition > cellCount) {
+        if (alienMissilePosition >= cellCount) {
             clearInterval(alienMissileInterval)
         } else if (cells[alienMissilePosition].classList.contains('hero')) {
             heroHitSound.playbackRate = 1.3
             heroHitSound.volume = 0.5
             heroHitSound.play()
-            removeHero
             clearInterval(alienMissileInterval)
             lives--
             playerLives.textContent = `Lives: ${lives}`
-            addHero
             gameOver()
         } else if (cells[alienMissilePosition].classList.contains('shield')) {
             cells[alienMissilePosition].classList.remove('shield', 'alienMissile')
